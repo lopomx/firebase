@@ -1,0 +1,60 @@
+<html>
+<head>
+
+<script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-app.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-database.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-auth.js"></script>
+
+</head>
+
+<body>
+<input type="email" placeholder="email" id="email">
+<input type="password" placeholder="password" id="password">
+
+<button onclick="send()">Submit</button>
+
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyAeNEkd1u_wirqO4zkl71k03UGUtLH6Ses",
+    authDomain: "login-5a5f9.firebaseapp.com",
+    databaseURL: "https://login-5a5f9.firebaseio.com",
+    projectId: "login-5a5f9",
+    storageBucket: "login-5a5f9.appspot.com",
+    messagingSenderId: "695849398377",
+    appId: "1:695849398377:web:4e761d415c994bf291f2f8"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  var database = firebase.database();
+  
+  
+  function send() {
+  		email = document.getElementById("email").value
+  		password = document.getElementById("password").value
+  		firebase.auth().createUserWithEmailAndPassword(email, password).then(function() {
+  				firebase.database().ref('users').push().set({
+    email: email,
+    password: password
+  }).then(function(){
+  		alert("saved in database")
+  		}).catch(function (error){
+  				alert("an error occurred")
+  				})
+
+  				}).catch(function(error) {
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  alert(errorMessage)
+  
+});
+  
+}
+  
+</script>
+</body>
+
+</html>
